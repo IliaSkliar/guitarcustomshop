@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Orders{% endblock %}
+
+{%block content%}
+    <a href="{% url 'create_order' %}">Create order</a>
+    <h1 class = "mb-5"> My orders: </h1>
+    <div class="row">
+    {% for order in orders %}
+          <div class="col-sm-4">
+            <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title">Status: {{ order.status }}</h5>
+                  <h5 class="card-title">Aim: {{ order.problem }}</h5>
+                  <p class="card-text">Description: {{ order.description|truncatewords:15 }}</p>
+                <a href="{% url 'order_details' order.id %}" class="btn btn-primary">Details</a>
+              </div>
+            </div>
+          </div>
+    {% endfor %}
+    {% if user.is_master %}
+    </div><h1 class = "mb-5"> All orders: </h1>
+    <div class="row">
+    {% for order in open_orders %}
+          <div class="col-sm-4">
+            <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title">Status: {{ order.status }}</h5>
+                  <h5 class="card-title">Aim: {{ order.problem }}</h5>
+                  <p class="card-text">Description: {{ order.description|truncatewords:15 }}</p>
+                <a href="{% url 'order_details' order.id %}" class="btn btn-primary">Details</a>
+              </div>
+            </div>
+          </div>
+    {% endfor %}
+    </div>
+    {% endif %}
+{%endblock%}

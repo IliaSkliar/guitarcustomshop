@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Order{% endblock %}
+
+{% block content %}
+{{error}}
+{{order.description}} | {{order.id}}
+Status: {{order.status}}
+Owner: {{order.owner}}
+{% if user.is_master%}
+    {% if order.status == 'open'%}
+        <a href="{%url 'accept_order' order.id %}">Accept order</a>
+    {%endif%}
+    {% if order.status == 'in_work'%}
+        <a href="{%url 'order_done' order.id %}">Work is done</a>
+    {%endif%}
+{%endif%}
+{%endblock%}
